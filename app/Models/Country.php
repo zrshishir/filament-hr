@@ -9,7 +9,6 @@ class Country extends Model
 {
     use HasFactory;
 
-    protected $connection = 'mongodb';
     protected $collection = 'countries';
     protected $fillable = ['country_code', 'name'];
 
