@@ -3,33 +3,33 @@
 namespace App\Filament\Resources;
 
 use Filament\Forms;
+use App\Models\User;
 use Filament\Tables;
-use App\Models\Country;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
 use Illuminate\Database\Eloquent\Builder;
-use App\Filament\Resources\CountryResource\Pages;
+use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\CountryResource\RelationManagers;
+use App\Filament\Resources\UserResource\RelationManagers;
 
-class CountryResource extends Resource
+class UserResource extends Resource
 {
-    protected static ?string $model = Country::class;
+    protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-home';
-    protected static ?string $navigationGroup = 'System Management';
-
-    protected static ?string $title = 'country';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
+    protected static ?string $navigationGroup = 'User Management';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Card::make()->schema([
-                    Forms\Components\TextInput::make('country_code'),
-                    Forms\Components\TextInput::make('name')
+                    Forms\Components\TextInput::make('name'),
+                    Forms\Components\TextInput::make('email')->email(),
+                    Forms\Components\TextInput::make('phone'),
+                    Forms\Components\TextInput::make('password'),
                 ])
             ]);
     }
@@ -38,12 +38,14 @@ class CountryResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id'),
-                Tables\Columns\TextColumn::make('country_code')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('name')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('name')->sortable(),
+                Tables\Columns\TextColumn::make('phone')->sortable(),
+                Tables\Columns\TextColumn::make('email')->sortable()->searchable(),
             ])
             ->filters([
-                Tables\Filters\Filter::make('user_id')->query(fn (Builder $query): Builder => $query->whereNotNull('user_id')),
+                Tables\Filters\Filter::make('name')->query(fn (Builder $query): Builder => $query->whereNotNull('name')),
+                Tables\Filters\Filter::make('phone')->query(fn (Builder $query): Builder => $query->whereNotNull('phone')),
+                Tables\Filters\Filter::make('email')->query(fn (Builder $query): Builder => $query->whereNotNull('email')),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -65,9 +67,9 @@ class CountryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCountries::route('/'),
-            'create' => Pages\CreateCountry::route('/create'),
-            'edit' => Pages\EditCountry::route('/{record}/edit'),
+            'index' => Pages\ListUsers::route('/'),
+            'create' => Pages\CreateUser::route('/create'),
+            'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }    
     

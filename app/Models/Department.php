@@ -9,7 +9,6 @@ class Department extends Model
 {
     use HasFactory;
 
-    protected $connection = 'mongodb';
     protected $collection = 'departments';
     protected $fillable = ['name'];
 
