@@ -28,4 +28,8 @@ class Employee extends Model
     public function department() {
         return $this->belongsTo(Department::class);
     }
+
+    public function tags() {
+        return $this->belongsToMany(Tag::class, null, 'employee_ids', 'tag_ids');
+    }
 }

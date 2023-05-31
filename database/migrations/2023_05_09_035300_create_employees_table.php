@@ -13,19 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('employees', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('country_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('state_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('city_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('department_id')->constrained()->cascadeOnDelete();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('address');
-            $table->char('zip_code');
-            $table->date('birth_date');
-            $table->date('date_hired');
-            $table->timestamps();
+        Schema::create('employees', function (Blueprint $collection) {
+            $collection->id();
+            $collection->foreignId('country_id')->constrained()->cascadeOnDelete();
+            $collection->foreignId('state_id')->constrained()->cascadeOnDelete();
+            $collection->foreignId('city_id')->constrained()->cascadeOnDelete();
+            $collection->foreignId('department_id')->constrained()->cascadeOnDelete();
+            $collection->string('first_name');
+            $collection->string('last_name');
+            $collection->string('address');
+            $collection->char('zip_code');
+            $collection->date('birth_date');
+            $collection->date('date_hired');
+            $collection->timestamps();
         });
     }
 
